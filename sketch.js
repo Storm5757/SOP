@@ -6,12 +6,12 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  
+  imageMode(CENTER);
 }
 
 function draw() {
   background(220);
   if (img) {
-    image(img, windowWidth/2-215, 0, 860/1071*windowHeight, windowHeight);
+    image(img, windowWidth/2, windowHeight/2, 860/1071*windowHeight, windowHeight);
   }
 }
