@@ -18,7 +18,6 @@ class Stadion {
     ellipse(this.x, this.y, this.radius * 2, this.radius * 2);
   }
 
-  // valgfrit: vis id ved hover eller altid
   displayLabel() {
     noStroke();
     fill(0);
@@ -41,17 +40,14 @@ class Stadion {
     textSize(12);
     const padding = 6;
     const w = max(...lines.map((l) => textWidth(l))) + padding * 2;
-    const h = lines.Length * 16 + padding * 2;
+    const h = lines.length * 16 + padding * 2;
     let tx = mouseX + 12;
     let ty = mouseY + 12;
-    // hold tooltip indenfor canvas
     if (tx + w > screenWidth) tx = mouseX - w - 12;
     if (ty + h > screenHeight) ty = mouseY - h - 12;
-    // baggrund
     noStroke();
     fill(255, 255, 225, 230);
     rect(tx, ty, w, h, 6);
-    // tekst
     fill(0);
     textAlign(LEFT, TOP);
     for (let i = 0; i < lines.length; i++) {
@@ -67,16 +63,14 @@ class Stadion {
   }
 }
 
-// Kanter med vægt (afstand)
 class Kanter {
   constructor(a, b, vægt) {
-    this.a = a; // Node
-    this.b = b; // Node
+    this.a = a;
+    this.b = b;
     this.vægt = vægt;
   }
 }
 
-// Graf med nodes og kanter
 class Graf {
   constructor() {
     this.noder = [];
@@ -92,7 +86,6 @@ class Graf {
     this.kanter.push(new Kanter(a, b, w));
   }
 
-  // Lav fuldt forbundet graf (kan ændres til fx kun naboer inden for threshold)
   forbindAlle() {
     this.kanter = [];
     for (let i = 0; i < this.noder.length; i++) {
@@ -102,7 +95,6 @@ class Graf {
     }
   }
 
-  // Hjælp: returner kanter ud fra node
   naboer(node) {
     const nabo = [];
     for (let e of this.kanter) {
@@ -164,10 +156,9 @@ function drawLinesBetweenStadions() {
 
 function setup() {
   createCanvas(screenWidth, screenHeight);
-  // Brug graf + noder i stedet for rå stadions-array
+
   graf = new Graf();
 
-  // Tilføj noder (brug dine koordinater)
   graf.tilføjeStadion(
     new Stadion("A", 820, 330, {
       navn: "Parken",
@@ -227,13 +218,10 @@ function setup() {
 function draw() {
   background(220);
   drawMap();
-  // tegn kanter fra grafen
-  graf.tegnKanter();
 
-  // tegn noder
+  graf.tegnKanter();
   graf.tegnNoder();
 
-  // håndter hover: find første node under musen
   const hovered = graf.noder.find((n) => n.isMouseOver());
   if (hovered) {
     hovered.highlight();
