@@ -200,11 +200,19 @@ function setup() {
     })
   );
   graf.tilføjeStadion(
-    new Stadion("F", 750, 420, {
+    new Stadion("F", 800, 300, {
       navn: "Nordsjællands Stadion",
       bynavn: "Farum",
       kapacitet: 10000,
       byggetår: 1999,
+    })
+  );
+  graf.tilføjeStadion(
+    new Stadion("G", 750, 400, {
+      navn: "Næstved Stadion",
+      bynavn: "Næstved",
+      kapacitet: 10000,
+      byggetår: 1944,
     })
   );
 
