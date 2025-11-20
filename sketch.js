@@ -3,6 +3,119 @@ let stadions;
 let screenWidth = 1280;
 let screenHeight = 550;
 let maxKantVægt = 12;
+let button;
+let combo1, combo2;
+
+let distances;
+let predecessors;
+
+function initializeDijkstra(graf, startNode) {
+  distances = {};
+  predecessors = {};
+  for (let node of graf.noder) {
+    distances[node.id] = Infinity;
+    predecessors[node.id] = null;
+  }
+  distances[startNode.id] = 0;
+}
+
+function relax(u, v, weight) {}
+
+function extractMinNode(unvisited, distances) {}
+
+function Dijkstra(startNode, endNode) {
+  console.log("Dijkstra's algoritme kaldt");
+  // Implementér Dijkstra's algoritme her
+  // Returnér den korteste sti som en liste af noder
+  initializeDijkstra(graf, startNode);
+  console.log(distances, predecessors);
+
+  let unvisited = new Set(graf.noder);
+  while (unvisited.size > 0) {
+    let currentNode = null;
+    let currentDist = Infinity;
+    for (let node of unvisited) {
+      console.log("Tjekker node", node.id, "med dist", dist[node.id]);
+      if (dist[node.id] < currentDist) {
+        currentDist = dist[node.id];
+        currentNode = node;
+      }
+    }
+
+    if (currentNode === endNode) break;
+
+    unvisited.delete(currentNode);
+
+    for (let neighborInfo of graf.naboer(currentNode)) {
+      let alt = dist[currentNode.id] + neighborInfo.vægt;
+      if (alt < dist[neighborInfo.node.id]) {
+        dist[neighborInfo.node.id] = alt;
+        pred[neighborInfo.node.id] = currentNode;
+      }
+    }
+  }
+
+  let path = [];
+  let step = endNode;
+  while (step) {
+    path.unshift(step);
+    step = pred[step.id];
+  }
+
+  if (path[0] !== startNode) return []; // No path found
+  return path;
+}
+
+function buttonHandler() {
+  const startId = combo1.value();
+  const slutId = combo2.value();
+  if (startId === slutId) {
+    alert("Start- og slutstadion må ikke være det samme!");
+    return;
+  } else if (!startId || !slutId) {
+    alert("Vælg både start- og slutstadion!");
+    return;
+  } else {
+    const shortestPath = Dijkstra(
+      graf.noder.find((n) => n.id === startId),
+      graf.noder.find((n) => n.id === slutId)
+    );
+    console.log("Korteste vej:", shortestPath);
+  }
+}
+
+function createUI() {
+  // Første combo-box
+  combo1 = createSelect();
+  combo1.position(width / 2 + 50, 20);
+
+  combo1.option("A");
+  combo1.option("B");
+  combo1.option("C");
+  combo1.option("D");
+  combo1.option("E");
+  combo1.option("F");
+  combo1.option("G");
+
+  // Anden combo-box
+  combo2 = createSelect();
+  combo2.position(width / 2 + 50, 60);
+  combo2.option("A");
+  combo2.option("B");
+  combo2.option("C");
+  combo2.option("D");
+  combo2.option("E");
+  combo2.option("F");
+  combo2.option("G");
+
+  // Knap
+  button = createButton("Find korteste vej");
+  button.position(width / 2 + 50, 100);
+  button.mousePressed(buttonHandler);
+
+  // Returnér elementerne
+  return { combo1, combo2, button };
+}
 
 function tegnTabelOverVægte() {
   if (!graf || !graf.noder) return;
@@ -217,6 +330,7 @@ function drawStadions() {
 
 function setup() {
   createCanvas(screenWidth, screenHeight);
+  createUI();
 
   graf = new Graf();
 
@@ -284,10 +398,19 @@ function setup() {
   stadions = graf.noder;
 }
 
+function tegnLabelsTilComboBoxes() {
+  textSize(16);
+  fill(0);
+  noStroke();
+  textAlign(RIGHT, CENTER);
+  text("Vælg startstadion:", width / 2, 30);
+  text("Vælg slutstadion:", width / 2, 70);
+}
+
 function draw() {
   background(220);
   drawMap();
-
+  tegnLabelsTilComboBoxes();
   graf.tegnKanter();
   graf.tegnNoder();
 
