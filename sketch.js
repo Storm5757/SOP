@@ -145,7 +145,7 @@ function Dijkstra(startNode) {
   initializeDijkstra(graf, startNode);
 
   let unvisited = new Set(graf.noder);
-  console.log("Unvisited nodes:", unvisited);
+
   while (unvisited.size > 0) {
     // finde den node med den mindste afstand
     let currentNode = null;
