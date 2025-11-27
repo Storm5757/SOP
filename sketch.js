@@ -254,9 +254,9 @@ function tegnTabelOverVægte() {
     textSize(12);
     textAlign(CENTER, CENTER);
     if (j === 0) {
-      text("Vægt", x + cellWidth / 2, y + cellHeight / 2 + 6);
+      text("Vægt", x + cellWidth / 2, y + cellHeight / 2);
     } else {
-      text(nodes[j - 1].id, x + cellWidth / 2, y + cellHeight / 2 + 6);
+      text(nodes[j - 1].id, x + cellWidth / 2, y + cellHeight / 2);
     }
   }
 
@@ -270,7 +270,7 @@ function tegnTabelOverVægte() {
     noStroke();
     textSize(12);
     textAlign(CENTER, CENTER);
-    text(nodes[i].id, cellWidth / 2, rowY + cellHeight / 2 + 6);
+    text(nodes[i].id, cellWidth / 2, rowY + cellHeight / 2);
 
     for (let j = 0; j < n; j++) {
       let x = (j + 1) * cellWidth;
@@ -282,7 +282,7 @@ function tegnTabelOverVægte() {
       noStroke();
       textAlign(CENTER, CENTER);
       const weight = i === j ? "0" : getWeight(nodes[i], nodes[j]);
-      text(weight, x + cellWidth / 2, rowY + cellHeight / 2 + 6);
+      text(weight, x + cellWidth / 2, rowY + cellHeight / 2);
     }
   }
 }
